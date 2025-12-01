@@ -12,18 +12,12 @@ public class NewReleaseMovie extends Movie {
     }
     
     @Override
-    public int getPriceCode() {
-        return Movie.NEW_RELEASE;
-    }
-    
-    @Override
     public double getCharge(int daysRented) {
         return daysRented * CHARGE_PER_DAY;
     }
     
     @Override
     public int getFrequentRenterPoints(int daysRented) {
-        // add bonus for a two day new release rental
         return (daysRented > BONUS_POINT_THRESHOLD) ? BONUS_POINTS : REGULAR_POINTS;
     }
 }

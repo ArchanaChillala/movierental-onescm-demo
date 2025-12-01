@@ -11,11 +11,6 @@ public class ChildrensMovie extends Movie {
     }
     
     @Override
-    public int getPriceCode() {
-        return Movie.CHILDRENS;
-    }
-    
-    @Override
     public double getCharge(int daysRented) {
         double amount = BASE_CHARGE;
         if (daysRented > FREE_DAYS)

@@ -1,6 +1,5 @@
 package movierental;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;

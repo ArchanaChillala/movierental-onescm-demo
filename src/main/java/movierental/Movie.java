@@ -11,8 +11,6 @@ public abstract class Movie {
     public Movie(String title) {
         _title = title;
     }
-
-    public abstract int getPriceCode();
     
     public String getTitle() {
         return _title;
