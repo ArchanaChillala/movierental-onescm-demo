@@ -18,11 +18,17 @@ public class BackstagePass extends Item {
 
     private void increaseQualityBasedOnUrgency() {
         increaseQuality();
-        
+        addMediumUrgencyBonus();
+        addHighUrgencyBonus();
+    }
+
+    private void addMediumUrgencyBonus() {
         if (isMediumUrgency()) {
             increaseQuality();
         }
-        
+    }
+
+    private void addHighUrgencyBonus() {
         if (isHighUrgency()) {
             increaseQuality();
         }
