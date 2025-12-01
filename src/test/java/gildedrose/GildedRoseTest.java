@@ -13,8 +13,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(9, items[0].sellIn);
-        assertEquals(19, items[0].quality);
+        assertEquals(9, items[0].getSellIn());
+        assertEquals(19, items[0].getQuality());
     }
 
     @Test
@@ -24,8 +24,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(-1, items[0].sellIn);
-        assertEquals(18, items[0].quality);
+        assertEquals(-1, items[0].getSellIn());
+        assertEquals(18, items[0].getQuality());
     }
 
     @Test
@@ -35,8 +35,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(4, items[0].sellIn);
-        assertEquals(0, items[0].quality);
+        assertEquals(4, items[0].getSellIn());
+        assertEquals(0, items[0].getQuality());
     }
 
     @Test
@@ -46,8 +46,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(-2, items[0].sellIn);
-        assertEquals(0, items[0].quality);
+        assertEquals(-2, items[0].getSellIn());
+        assertEquals(0, items[0].getQuality());
     }
 
     @Test
@@ -57,8 +57,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(9, items[0].sellIn);
-        assertEquals(21, items[0].quality);
+        assertEquals(9, items[0].getSellIn());
+        assertEquals(21, items[0].getQuality());
     }
 
     @Test
@@ -68,8 +68,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(-1, items[0].sellIn);
-        assertEquals(22, items[0].quality);
+        assertEquals(-1, items[0].getSellIn());
+        assertEquals(22, items[0].getQuality());
     }
 
     @Test
@@ -79,8 +79,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(9, items[0].sellIn);
-        assertEquals(50, items[0].quality);
+        assertEquals(9, items[0].getSellIn());
+        assertEquals(50, items[0].getQuality());
     }
 
     @Test
@@ -90,8 +90,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(-2, items[0].sellIn);
-        assertEquals(50, items[0].quality);
+        assertEquals(-2, items[0].getSellIn());
+        assertEquals(50, items[0].getQuality());
     }
 
     @Test
@@ -101,8 +101,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(10, items[0].sellIn);
-        assertEquals(80, items[0].quality);
+        assertEquals(10, items[0].getSellIn());
+        assertEquals(80, items[0].getQuality());
     }
 
     @Test
@@ -112,8 +112,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(-1, items[0].sellIn);
-        assertEquals(80, items[0].quality);
+        assertEquals(-1, items[0].getSellIn());
+        assertEquals(80, items[0].getQuality());
     }
 
     @Test
@@ -123,8 +123,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(14, items[0].sellIn);
-        assertEquals(21, items[0].quality);
+        assertEquals(14, items[0].getSellIn());
+        assertEquals(21, items[0].getQuality());
     }
 
     @Test
@@ -134,8 +134,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(9, items[0].sellIn);
-        assertEquals(22, items[0].quality);
+        assertEquals(9, items[0].getSellIn());
+        assertEquals(22, items[0].getQuality());
     }
 
     @Test
@@ -145,8 +145,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(7, items[0].sellIn);
-        assertEquals(22, items[0].quality);
+        assertEquals(7, items[0].getSellIn());
+        assertEquals(22, items[0].getQuality());
     }
 
     @Test
@@ -156,8 +156,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(4, items[0].sellIn);
-        assertEquals(23, items[0].quality);
+        assertEquals(4, items[0].getSellIn());
+        assertEquals(23, items[0].getQuality());
     }
 
     @Test
@@ -167,8 +167,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(2, items[0].sellIn);
-        assertEquals(23, items[0].quality);
+        assertEquals(2, items[0].getSellIn());
+        assertEquals(23, items[0].getQuality());
     }
 
     @Test
@@ -178,8 +178,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(-1, items[0].sellIn);
-        assertEquals(0, items[0].quality);
+        assertEquals(-1, items[0].getSellIn());
+        assertEquals(0, items[0].getQuality());
     }
 
     @Test
@@ -189,8 +189,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(14, items[0].sellIn);
-        assertEquals(50, items[0].quality);
+        assertEquals(14, items[0].getSellIn());
+        assertEquals(50, items[0].getQuality());
     }
 
     @Test
@@ -200,8 +200,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(9, items[0].sellIn);
-        assertEquals(50, items[0].quality);
+        assertEquals(9, items[0].getSellIn());
+        assertEquals(50, items[0].getQuality());
     }
 
     @Test
@@ -211,8 +211,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(4, items[0].sellIn);
-        assertEquals(50, items[0].quality);
+        assertEquals(4, items[0].getSellIn());
+        assertEquals(50, items[0].getQuality());
     }
 
     @Test
@@ -227,17 +227,17 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(9, items[0].sellIn);
-        assertEquals(19, items[0].quality);
+        assertEquals(9, items[0].getSellIn());
+        assertEquals(19, items[0].getQuality());
         
-        assertEquals(4, items[1].sellIn);
-        assertEquals(11, items[1].quality);
+        assertEquals(4, items[1].getSellIn());
+        assertEquals(11, items[1].getQuality());
         
-        assertEquals(0, items[2].sellIn);
-        assertEquals(80, items[2].quality);
+        assertEquals(0, items[2].getSellIn());
+        assertEquals(80, items[2].getQuality());
         
-        assertEquals(14, items[3].sellIn);
-        assertEquals(31, items[3].quality);
+        assertEquals(14, items[3].getSellIn());
+        assertEquals(31, items[3].getQuality());
     }
 
     @Test
@@ -250,8 +250,8 @@ class GildedRoseTest {
             app.updateQuality();
         }
         
-        assertEquals(-2, items[0].sellIn);
-        assertEquals(1, items[0].quality); // 5 days at -1, 2 days at -2
+        assertEquals(-2, items[0].getSellIn());
+        assertEquals(1, items[0].getQuality()); // 5 days at -1, 2 days at -2
     }
 
     @Test
@@ -262,27 +262,27 @@ class GildedRoseTest {
         
         // Day 1: 11 -> 10 days, quality +1
         app.updateQuality();
-        assertEquals(10, items[0].sellIn);
-        assertEquals(11, items[0].quality);
+        assertEquals(10, items[0].getSellIn());
+        assertEquals(11, items[0].getQuality());
         
         // Days 2-6: 10 -> 5 days, quality +2 each day
         for (int i = 0; i < 5; i++) {
             app.updateQuality();
         }
-        assertEquals(5, items[0].sellIn);
-        assertEquals(21, items[0].quality);
+        assertEquals(5, items[0].getSellIn());
+        assertEquals(21, items[0].getQuality());
         
         // Days 7-11: 5 -> 0 days, quality +3 each day
         for (int i = 0; i < 5; i++) {
             app.updateQuality();
         }
-        assertEquals(0, items[0].sellIn);
-        assertEquals(36, items[0].quality);
+        assertEquals(0, items[0].getSellIn());
+        assertEquals(36, items[0].getQuality());
         
         // Day 12: after concert, quality drops to 0
         app.updateQuality();
-        assertEquals(-1, items[0].sellIn);
-        assertEquals(0, items[0].quality);
+        assertEquals(-1, items[0].getSellIn());
+        assertEquals(0, items[0].getQuality());
     }
 
     @Test
@@ -295,15 +295,15 @@ class GildedRoseTest {
         for (int i = 0; i < 10; i++) {
             app.updateQuality();
         }
-        assertEquals(0, items[0].sellIn);
-        assertEquals(10, items[0].quality);
+        assertEquals(0, items[0].getSellIn());
+        assertEquals(10, items[0].getQuality());
         
         // 20 days after sell date: +2 per day, but capped at 50
         for (int i = 0; i < 20; i++) {
             app.updateQuality();
         }
-        assertEquals(-20, items[0].sellIn);
-        assertEquals(50, items[0].quality);
+        assertEquals(-20, items[0].getSellIn());
+        assertEquals(50, items[0].getQuality());
     }
 
     @Test
@@ -316,8 +316,8 @@ class GildedRoseTest {
             app.updateQuality();
         }
         
-        assertEquals(-10, items[0].sellIn);
-        assertEquals(0, items[0].quality);
+        assertEquals(-10, items[0].getSellIn());
+        assertEquals(0, items[0].getQuality());
     }
 
     @Test
@@ -327,8 +327,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(9, items[0].sellIn);
-        assertEquals(50, items[0].quality);
+        assertEquals(9, items[0].getSellIn());
+        assertEquals(50, items[0].getQuality());
     }
 
     @Test
@@ -338,8 +338,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(4, items[0].sellIn);
-        assertEquals(50, items[0].quality);
+        assertEquals(4, items[0].getSellIn());
+        assertEquals(50, items[0].getQuality());
     }
 
     @Test
@@ -349,8 +349,8 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(4, items[0].sellIn);
-        assertEquals(0, items[0].quality);
+        assertEquals(4, items[0].getSellIn());
+        assertEquals(0, items[0].getQuality());
     }
 
     @Test
@@ -360,7 +360,7 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         
-        assertEquals(-2, items[0].sellIn);
-        assertEquals(50, items[0].quality);
+        assertEquals(-2, items[0].getSellIn());
+        assertEquals(50, items[0].getQuality());
     }
 }
