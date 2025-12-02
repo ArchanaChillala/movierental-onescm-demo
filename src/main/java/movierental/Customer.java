@@ -2,11 +2,12 @@ package movierental;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Customer {
 
     private final String name;
-    private List<Rental> rentals = new ArrayList<>();
+    private final List<Rental> rentals = new ArrayList<>();
 
     public Customer(String name) {
         this.name = name;

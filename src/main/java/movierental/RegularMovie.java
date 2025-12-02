@@ -12,24 +12,25 @@ public class RegularMovie extends Movie {
     
     @Override
     public double getCharge(int daysRented) {
-        if (exceedsBasePeriod(daysRented))
+        if (exceedsBasePeriod(daysRented)) {
             return calculateExtendedRentalCharge(daysRented);
+        }
         return BASE_CHARGE;
     }
 
-    private static double calculateExtendedRentalCharge(int daysRented) {
+    private double calculateExtendedRentalCharge(int daysRented) {
         return BASE_CHARGE + extraCharge(daysRented);
     }
 
-    private static double extraCharge(int daysRented) {
+    private double extraCharge(int daysRented) {
         return countExtraDays(daysRented) * EXTRA_CHARGE_PER_DAY;
     }
 
-    private static int countExtraDays(int daysRented) {
+    private int countExtraDays(int daysRented) {
         return daysRented - BASE_PERIOD;
     }
 
-    private static boolean exceedsBasePeriod(int daysRented) {
+    private boolean exceedsBasePeriod(int daysRented) {
         return daysRented > BASE_PERIOD;
     }
 }
