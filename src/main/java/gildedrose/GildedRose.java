@@ -1,5 +1,7 @@
 package gildedrose;
 
+import java.util.Arrays;
+
 public class GildedRose {
     private final Item[] items;
 
@@ -9,9 +11,7 @@ public class GildedRose {
     }
 
     private void replaceWithSpecializedItems() {
-        for (int i = 0; i < items.length; i++) {
-            items[i] = createSpecializedItem(items[i]);
-        }
+        Arrays.setAll(items, i -> createSpecializedItem(items[i]));
     }
 
     private Item createSpecializedItem(Item item) {
