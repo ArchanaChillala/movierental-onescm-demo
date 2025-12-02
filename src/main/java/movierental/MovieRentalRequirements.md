@@ -1,4 +1,4 @@
-# Movie Rental
+# Movie Rental Requirements
 
 In this MovieRental codebase, the `statement` method prints out a simple text output of a rental statement
 ```
