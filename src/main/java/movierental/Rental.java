@@ -2,6 +2,10 @@ package movierental;
 
 public class Rental {
 
+    private static final int BASE_THRESHOLD_DAYS = 1;
+    private static final int DEFAULT_FREQUENT_RENTER_POINTS = 1;
+    private static final int BONUS_FREQUENT_RENTER_POINTS = 2;
+
     private Movie _movie;
     private int _daysRented;
 
@@ -10,23 +14,30 @@ public class Rental {
         _daysRented = daysRented;
     }
 
-    public int getDaysRented() {
-        return _daysRented;
-    }
-
-    public Movie getMovie() {
-        return _movie;
-    }
-
     public double getCharge() {
-        return _movie.getCharge(getDaysRented());
+        return _movie.getCharge(_daysRented);
     }
 
     public int getFrequentRenterPoints() {
-        return _movie.getFrequentRenterPoints(getDaysRented());
+        if (qualifiesForBonusPoints()) {
+            return BONUS_FREQUENT_RENTER_POINTS;
+        }
+        return DEFAULT_FREQUENT_RENTER_POINTS;
+    }
+
+    private boolean qualifiesForBonusPoints() {
+        return isNewReleaseMovie() && isExtendedRental();
+    }
+
+    private boolean isNewReleaseMovie() {
+        return _movie instanceof NewReleaseMovie;
+    }
+
+    private boolean isExtendedRental() {
+        return _daysRented > BASE_THRESHOLD_DAYS;
     }
 
     public String getStatementLine() {
-        return String.format("\t%s\t%.1f\n", getMovie().getTitle(), getCharge());
+        return String.format("\t%s\t%.1f\n", _movie.getTitle(), getCharge());
     }
 }
