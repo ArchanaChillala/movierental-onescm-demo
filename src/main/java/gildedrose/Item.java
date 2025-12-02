@@ -2,16 +2,14 @@ package gildedrose;
 
 public class Item {
 
-    protected static final int MAX_QUALITY = 50;
-    
     private final String name;
-    private int sellIn;
-    private int quality;
+    private final SellIn sellIn;
+    private final Quality quality;
 
     public Item(String name, int sellIn, int quality) {
         this.name = name;
-        this.sellIn = sellIn;
-        this.quality = quality;
+        this.sellIn = new SellIn(sellIn);
+        this.quality = new Quality(quality);
     }
 
     public static Item create(String name, int sellIn, int quality) {
@@ -23,11 +21,11 @@ public class Item {
     }
 
     public int getSellIn() {
-        return sellIn;
+        return sellIn.getValue();
     }
 
     public int getQuality() {
-        return quality;
+        return quality.getValue();
     }
 
     public void updateQuality() {
@@ -37,33 +35,33 @@ public class Item {
     }
 
     protected void decreaseQuality() {
-        if (quality > 0) {
-            quality--;
-        }
+        quality.decrease();
     }
 
     protected void decreaseSellIn() {
-        sellIn--;
+        sellIn.decrease();
     }
 
     protected void applyExpiredPenalty() {
-        if (isExpired() && quality > 0) {
-            quality--;
+        if (isExpired() && quality.isPositive()) {
+            quality.decrease();
         }
     }
 
     protected void increaseQuality() {
-        if (quality < MAX_QUALITY) {
-            quality++;
-        }
+        quality.increase();
     }
 
     protected void resetQuality() {
-        quality = 0;
+        quality.reset();
     }
 
     protected boolean isExpired() {
-        return sellIn < 0;
+        return sellIn.isExpired();
+    }
+
+    protected boolean isSellInWithin(int days) {
+        return sellIn.isWithin(days);
     }
 
     @Override

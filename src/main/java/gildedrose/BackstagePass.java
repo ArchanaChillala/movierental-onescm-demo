@@ -41,10 +41,10 @@ public class BackstagePass extends Item {
     }
 
     private boolean isMediumUrgency() {
-        return getSellIn() <= MEDIUM_URGENCY_THRESHOLD;
+        return isSellInWithin(MEDIUM_URGENCY_THRESHOLD);
     }
 
     private boolean isHighUrgency() {
-        return getSellIn() <= HIGH_URGENCY_THRESHOLD;
+        return isSellInWithin(HIGH_URGENCY_THRESHOLD);
     }
 }
