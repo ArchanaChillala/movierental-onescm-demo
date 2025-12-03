@@ -32,7 +32,7 @@ public class CharacterizationTest {
         customer.addRental(new Rental(new ChildrensMovie("Children 1 day"), 1));
         customer.addRental(new Rental(new ChildrensMovie("Children 7 days"), 7));
         
-        String statement = customer.statement();
+        String statement = customer.generateStatement(new TextStatementFormatter());
         
         // Verify all charges
         assertTrue(statement.contains("2.0"));  // Regular 1 day
@@ -58,7 +58,7 @@ public class CharacterizationTest {
         Customer customer = new Customer("Alice");
         customer.addRental(new Rental(new RegularMovie("Movie"), 3));
         
-        String statement = customer.statement();
+        String statement = customer.generateStatement(new TextStatementFormatter());
         
         // Verify header format
         assertTrue(statement.startsWith("Rental Record for Alice\n"));
@@ -81,7 +81,7 @@ public class CharacterizationTest {
         customer.addRental(new Rental(new RegularMovie("M1"), 3));  // 3.5
         customer.addRental(new Rental(new NewReleaseMovie("M2"), 2));  // 6.0
         
-        String statement = customer.statement();
+        String statement = customer.generateStatement(new TextStatementFormatter());
         
         // Individual charges formatted with one decimal place
         assertTrue(statement.contains("\tM1\t3.5\n"));
@@ -99,7 +99,7 @@ public class CharacterizationTest {
         customer.addRental(new Rental(new ChildrensMovie("Second"), 1));
         customer.addRental(new Rental(new NewReleaseMovie("Third"), 1));
         
-        String statement = customer.statement();
+        String statement = customer.generateStatement(new TextStatementFormatter());
         
         // Verify rentals appear in the order they were added
         int firstPos = statement.indexOf("First");
@@ -120,7 +120,7 @@ public class CharacterizationTest {
         customer.addRental(new Rental(new ChildrensMovie("C"), 0));
         customer.addRental(new Rental(new NewReleaseMovie("N"), 0));
         
-        String statement = customer.statement();
+        String statement = customer.generateStatement(new TextStatementFormatter());
         
         // Regular: $2.0 (base), Children's: $1.5 (base), New Release: $0.0 = $3.5 total
         assertTrue(statement.contains("Amount owed is 3.5"));
@@ -137,7 +137,7 @@ public class CharacterizationTest {
         customer.addRental(new Rental(new RegularMovie("Test: Movie & More!"), 1));
         customer.addRental(new Rental(new ChildrensMovie("Movie's Title"), 1));
         
-        String statement = customer.statement();
+        String statement = customer.generateStatement(new TextStatementFormatter());
         
         assertTrue(statement.contains("Rental Record for Mary Jane-Watson\n"));
         assertTrue(statement.contains("Test: Movie & More!"));
@@ -193,7 +193,7 @@ public class CharacterizationTest {
                 "Amount owed is 0.0\n" +
                 "You earned 0 frequent renter points";
         
-        assertEquals(expected, customer.statement());
+        assertEquals(expected, customer.generateStatement(new TextStatementFormatter()));
     }
     
     @Test
@@ -204,13 +204,13 @@ public class CharacterizationTest {
         Customer customer3 = new Customer("");
         
         assertEquals("John Smith", customer1.getName());
-        assertTrue(customer1.statement().contains("Rental Record for John Smith\n"));
+        assertTrue(customer1.generateStatement(new TextStatementFormatter()).contains("Rental Record for John Smith\n"));
         
         assertEquals("123", customer2.getName());
-        assertTrue(customer2.statement().contains("Rental Record for 123\n"));
+        assertTrue(customer2.generateStatement(new TextStatementFormatter()).contains("Rental Record for 123\n"));
         
         assertEquals("", customer3.getName());
-        assertTrue(customer3.statement().contains("Rental Record for \n"));
+        assertTrue(customer3.generateStatement(new TextStatementFormatter()).contains("Rental Record for \n"));
     }
     
     @Test

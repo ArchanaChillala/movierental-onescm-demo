@@ -19,7 +19,7 @@ public abstract class RentalStatementFormatter {
 
     protected abstract String formatFooter(List<Rental> rentals);
 
-    public abstract String formatLine(Rental rental);
+    protected abstract String formatLine(Rental rental);
 
     protected double calculateTotalAmount(List<Rental> rentals) {
         return rentals.stream()
