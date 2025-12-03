@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public class CharacterizationTest {
 
-    private final RentalStatementFormatter formatter = new RentalStatementFormatter();
+    private final TextStatementFormatter formatter = new TextStatementFormatter();
 
     // ========== SYSTEM-WIDE BEHAVIOR CHARACTERIZATION ==========
 
@@ -227,8 +227,8 @@ public class CharacterizationTest {
         assertEquals(4.5, childrensRental.getCharge(), 0.01);
         
         // Verify statement line format
-        assertEquals("\tR\t6.5\n", formatter.formatTextLine(regularRental));
-        assertEquals("\tN\t15.0\n", formatter.formatTextLine(newReleaseRental));
-        assertEquals("\tC\t4.5\n", formatter.formatTextLine(childrensRental));
+        assertEquals("\tR\t6.5\n", formatter.formatLine(regularRental));
+        assertEquals("\tN\t15.0\n", formatter.formatLine(newReleaseRental));
+        assertEquals("\tC\t4.5\n", formatter.formatLine(childrensRental));
     }
 }

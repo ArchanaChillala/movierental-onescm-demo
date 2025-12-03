@@ -8,7 +8,8 @@ public class Customer {
 
     private final String name;
     private final List<Rental> rentals = new ArrayList<>();
-    private final RentalStatementFormatter formatter = new RentalStatementFormatter();
+    private final RentalStatementFormatter textFormatter = new TextStatementFormatter();
+    private final RentalStatementFormatter htmlFormatter = new HtmlStatementFormatter();
 
     public Customer(String name) {
         this.name = name;
@@ -23,11 +24,11 @@ public class Customer {
     }
 
     public String statement() {
-        return formatter.formatTextStatement(name, getUnmodifiableRentals());
+        return textFormatter.format(name, getUnmodifiableRentals());
     }
 
     public String htmlStatement() {
-        return formatter.formatHtmlStatement(name, getUnmodifiableRentals());
+        return htmlFormatter.format(name, getUnmodifiableRentals());
     }
 
     private List<Rental> getUnmodifiableRentals() {
