@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 
 public class RentalTest {
 
+    private final RentalStatementFormatter formatter = new RentalStatementFormatter();
+
     @Test
     @DisplayName("Rental should store movie and days rented correctly")
     public void testRentalCreation() {
@@ -94,7 +96,7 @@ public class RentalTest {
         Rental rental = new Rental(movie, 3);
         
         String expected = "\tThe Matrix\t3.5\n";
-        assertEquals(expected, rental.getIndividualStatementLine());
+        assertEquals(expected, formatter.formatTextLine(rental));
     }
 
     @Test
@@ -103,7 +105,7 @@ public class RentalTest {
         Movie movie = new NewReleaseMovie("Dune");
         Rental rental = new Rental(movie, 2);
         
-        String statementLine = rental.getIndividualStatementLine();
+        String statementLine = formatter.formatTextLine(rental);
         assertTrue(statementLine.contains("6.0"));
         assertTrue(statementLine.contains("Dune"));
     }
