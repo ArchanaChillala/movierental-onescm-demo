@@ -37,6 +37,16 @@ class ItemFactoryTest {
     }
 
     @Test
+    @DisplayName("Factory creates Conjured for 'Conjured' name")
+    void factoryCreatesConjuredForConjuredName() {
+        Item item = ItemFactory.createItem("Conjured", 10, 20);
+        assertInstanceOf(Conjured.class, item);
+        assertEquals("Conjured", item.getName());
+        assertEquals(10, item.getSellIn());
+        assertEquals(20, item.getQuality());
+    }
+
+    @Test
     @DisplayName("Factory creates normal Item for unknown name")
     void factoryCreatesNormalItemForUnknownName() {
         Item item = ItemFactory.createItem("Normal Item", 10, 20);
@@ -44,6 +54,7 @@ class ItemFactoryTest {
         assertFalse(item instanceof AgedBrie);
         assertFalse(item instanceof BackstagePass);
         assertFalse(item instanceof Sulfuras);
+        assertFalse(item instanceof Conjured);
         assertEquals("Normal Item", item.getName());
         assertEquals(10, item.getSellIn());
         assertEquals(20, item.getQuality());
