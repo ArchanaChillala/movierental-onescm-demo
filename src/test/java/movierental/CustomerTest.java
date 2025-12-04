@@ -1,5 +1,7 @@
 package movierental;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.assertFalse;
 
 import movierental.formatters.*;
 import movierental.movietypes.*;
@@ -443,5 +445,217 @@ public class CustomerTest {
                 "<p>You earned <em>2</em> frequent renter points</p>";
         
         assertEquals(expected, customer.generateStatement(new HtmlStatementFormatter()));
+    }
+
+    // ========== ADDITIONAL EDGE CASES ==========
+    
+    @Test
+    @DisplayName("Customer name should be immutable after creation")
+    public void testCustomerNameImmutability() {
+        Customer customer = new Customer("Alice");
+        
+        assertEquals("Alice", customer.getName());
+        assertEquals("Alice", customer.getName());
+    }
+    
+    @Test
+    @DisplayName("Customer with empty name should work")
+    public void testCustomerWithEmptyName() {
+        Customer customer = new Customer("");
+        
+        assertEquals("", customer.getName());
+        
+        String expected = "Rental Record for \n" +
+                "Amount owed is 0.0\n" +
+                "You earned 0 frequent renter points";
+        
+        assertEquals(expected, customer.generateStatement(new TextStatementFormatter()));
+    }
+    
+    @Test
+    @DisplayName("Customer can add same rental multiple times")
+    public void testAddingSameRentalMultipleTimes() {
+        Customer customer = new Customer("Test");
+        Rental rental = new Rental(new RegularMovie("Movie"), 1);
+        
+        customer.addRental(rental);
+        customer.addRental(rental);
+        customer.addRental(rental);
+        
+        String statement = customer.generateStatement(new TextStatementFormatter());
+        
+        // Should list the movie 3 times
+        int count = statement.split("Movie", -1).length - 1;
+        assertEquals(3, count);
+        
+        // Total: 2.0 * 3 = 6.0
+        assertTrue(statement.contains("Amount owed is 6.0"));
+        
+        // Points: 1 * 3 = 3
+        assertTrue(statement.contains("You earned 3 frequent renter points"));
+    }
+    
+    @Test
+    @DisplayName("Customer with 50+ rentals should work correctly")
+    public void testCustomerWithManyRentals() {
+        Customer customer = new Customer("Frequent Renter");
+        
+        for (int i = 1; i <= 50; i++) {
+            customer.addRental(new Rental(new RegularMovie("Movie" + i), 1));
+        }
+        
+        String statement = customer.generateStatement(new TextStatementFormatter());
+        
+        // Total: 50 * 2.0 = 100.0
+        assertTrue(statement.contains("Amount owed is 100.0"));
+        
+        // Points: 50 * 1 = 50
+        assertTrue(statement.contains("You earned 50 frequent renter points"));
+    }
+    
+    @Test
+    @DisplayName("Text and HTML formatters should calculate same totals")
+    public void testFormatterConsistency() {
+        Customer customer = new Customer("Test");
+        customer.addRental(new Rental(new RegularMovie("A"), 3));
+        customer.addRental(new Rental(new NewReleaseMovie("B"), 2));
+        customer.addRental(new Rental(new ChildrensMovie("C"), 4));
+        
+        String textStatement = customer.generateStatement(new TextStatementFormatter());
+        String htmlStatement = customer.generateStatement(new HtmlStatementFormatter());
+        
+        // Both should calculate same values
+        // Total: 3.5 + 6.0 + 3.0 = 12.5
+        assertTrue(textStatement.contains("12.5"));
+        assertTrue(htmlStatement.contains("12.5"));
+        
+        // Points: 1 + 2 + 1 = 4
+        assertTrue(textStatement.contains("4 frequent renter points"));
+        assertTrue(htmlStatement.contains("4"));
+    }
+    
+    @Test
+    @DisplayName("Customer with special character name in HTML should escape correctly")
+    public void testHtmlStatementWithSpecialCharactersInName() {
+        Customer customer = new Customer("Test & User <Name>");
+        customer.addRental(new Rental(new RegularMovie("Movie"), 1));
+        
+        String statement = customer.generateStatement(new HtmlStatementFormatter());
+        
+        // Name should be in emphasized tag
+        assertTrue(statement.contains("<em>Test & User <Name></em>"));
+    }
+    
+    @Test
+    @DisplayName("Customer getName should always return same value")
+    public void testGetNameConsistency() {
+        Customer customer = new Customer("Consistent Name");
+        
+        String name1 = customer.getName();
+        String name2 = customer.getName();
+        String name3 = customer.getName();
+        
+        assertEquals("Consistent Name", name1);
+        assertEquals("Consistent Name", name2);
+        assertEquals("Consistent Name", name3);
+        assertEquals(name1, name2);
+        assertEquals(name2, name3);
+    }
+    
+    @Test
+    @DisplayName("Customer with very high total amount should format correctly")
+    public void testCustomerWithVeryHighTotal() {
+        Customer customer = new Customer("Big Spender");
+        
+        // Add 100 new release movies for 10 days each
+        for (int i = 1; i <= 100; i++) {
+            customer.addRental(new Rental(new NewReleaseMovie("Movie" + i), 10));
+        }
+        
+        String statement = customer.generateStatement(new TextStatementFormatter());
+        
+        // Total: 100 * (10 * 3.0) = 100 * 30 = 3000.0
+        assertTrue(statement.contains("Amount owed is 3000.0"));
+        
+        // Points: 100 * 2 = 200 (all get bonus)
+        assertTrue(statement.contains("You earned 200 frequent renter points"));
+    }
+    
+    @Test
+    @DisplayName("Customer with Unicode characters in name should work")
+    public void testCustomerWithUnicodeName() {
+        Customer customer = new Customer("José María López");
+        customer.addRental(new Rental(new RegularMovie("Movie"), 1));
+        
+        String statement = customer.generateStatement(new TextStatementFormatter());
+        
+        assertTrue(statement.contains("Rental Record for José María López"));
+    }
+    
+    @Test
+    @DisplayName("Adding rentals should maintain order of addition")
+    public void testRentalOrderMaintained() {
+        Customer customer = new Customer("Test");
+        customer.addRental(new Rental(new RegularMovie("First"), 1));
+        customer.addRental(new Rental(new RegularMovie("Second"), 1));
+        customer.addRental(new Rental(new RegularMovie("Third"), 1));
+        customer.addRental(new Rental(new RegularMovie("Fourth"), 1));
+        
+        String statement = customer.generateStatement(new TextStatementFormatter());
+        
+        int firstPos = statement.indexOf("First");
+        int secondPos = statement.indexOf("Second");
+        int thirdPos = statement.indexOf("Third");
+        int fourthPos = statement.indexOf("Fourth");
+        
+        assertTrue(firstPos < secondPos);
+        assertTrue(secondPos < thirdPos);
+        assertTrue(thirdPos < fourthPos);
+    }
+    
+    @Test
+    @DisplayName("Customer with zero total amount should display 0.0")
+    public void testCustomerWithZeroAmount() {
+        Customer customer = new Customer("Zero Customer");
+        customer.addRental(new Rental(new NewReleaseMovie("Free Movie"), 0));
+        
+        String statement = customer.generateStatement(new TextStatementFormatter());
+        
+        assertTrue(statement.contains("Amount owed is 0.0"));
+    }
+    
+    @Test
+    @DisplayName("HTML statement with no rentals should not include table")
+    public void testHtmlStatementWithNoRentalsNoTable() {
+        Customer customer = new Customer("Empty");
+        
+        String statement = customer.generateStatement(new HtmlStatementFormatter());
+        
+        assertFalse(statement.contains("<table>"));
+        assertFalse(statement.contains("</table>"));
+        assertTrue(statement.contains("<p>Amount owed is <em>0.0</em></p>"));
+    }
+    
+    @Test
+    @DisplayName("Multiple customers should be independent")
+    public void testMultipleCustomersIndependence() {
+        Customer customer1 = new Customer("Alice");
+        Customer customer2 = new Customer("Bob");
+        
+        customer1.addRental(new Rental(new RegularMovie("Movie A"), 1));
+        customer2.addRental(new Rental(new RegularMovie("Movie B"), 1));
+        
+        String statement1 = customer1.generateStatement(new TextStatementFormatter());
+        String statement2 = customer2.generateStatement(new TextStatementFormatter());
+        
+        assertTrue(statement1.contains("Alice"));
+        assertFalse(statement1.contains("Bob"));
+        assertTrue(statement1.contains("Movie A"));
+        assertFalse(statement1.contains("Movie B"));
+        
+        assertTrue(statement2.contains("Bob"));
+        assertFalse(statement2.contains("Alice"));
+        assertTrue(statement2.contains("Movie B"));
+        assertFalse(statement2.contains("Movie A"));
     }
 }

@@ -233,4 +233,163 @@ public class CharacterizationTest {
         assertEquals("\tN\t15.0\n", formatter.formatLine(newReleaseRental));
         assertEquals("\tC\t4.5\n", formatter.formatLine(childrensRental));
     }
+    
+    // ========== ADDITIONAL EDGE CASES ==========
+    
+    @Test
+    @DisplayName("CHARACTERIZATION: Very large rental periods should calculate correctly")
+    public void characterizeVeryLargeRentalPeriods() {
+        Customer customer = new Customer("Test");
+        customer.addRental(new Rental(new RegularMovie("R"), 100));
+        customer.addRental(new Rental(new NewReleaseMovie("N"), 100));
+        customer.addRental(new Rental(new ChildrensMovie("C"), 100));
+        
+        String statement = customer.generateStatement(formatter);
+        
+        // Regular: 2.0 + (100-2)*1.5 = 2.0 + 147.0 = 149.0
+        assertTrue(statement.contains("149.0"));
+        // New Release: 100*3.0 = 300.0
+        assertTrue(statement.contains("300.0"));
+        // Children: 1.5 + (100-3)*1.5 = 1.5 + 145.5 = 147.0
+        assertTrue(statement.contains("147.0"));
+        
+        // Total: 149.0 + 300.0 + 147.0 = 596.0
+        assertTrue(statement.contains("Amount owed is 596.0"));
+        
+        // Points: 1 + 2 + 1 = 4
+        assertTrue(statement.contains("You earned 4 frequent renter points"));
+    }
+    
+    @Test
+    @DisplayName("CHARACTERIZATION: Multiple rentals of same movie should work independently")
+    public void characterizeMultipleRentalsOfSameMovie() {
+        Customer customer = new Customer("Test");
+        customer.addRental(new Rental(new RegularMovie("Same Movie"), 1));
+        customer.addRental(new Rental(new RegularMovie("Same Movie"), 3));
+        customer.addRental(new Rental(new RegularMovie("Same Movie"), 5));
+        
+        String statement = customer.generateStatement(formatter);
+        
+        // Should list "Same Movie" three times
+        int count = statement.split("Same Movie", -1).length - 1;
+        assertEquals(3, count);
+        
+        // Total: 2.0 + 3.5 + 6.5 = 12.0
+        assertTrue(statement.contains("Amount owed is 12.0"));
+        
+        // Points: 1 + 1 + 1 = 3
+        assertTrue(statement.contains("You earned 3 frequent renter points"));
+    }
+    
+    @Test
+    @DisplayName("CHARACTERIZATION: Empty string movie title should work")
+    public void characterizeEmptyMovieTitle() {
+        Customer customer = new Customer("Test");
+        customer.addRental(new Rental(new RegularMovie(""), 1));
+        
+        String statement = customer.generateStatement(formatter);
+        
+        // Should contain empty title with proper formatting
+        assertTrue(statement.contains("\t\t2.0"));
+        assertTrue(statement.contains("Amount owed is 2.0"));
+    }
+    
+    @Test
+    @DisplayName("CHARACTERIZATION: Very long movie and customer names should work")
+    public void characterizeVeryLongNames() {
+        String longName = "This Is An Extremely Long Customer Name With Many Words To Test Edge Cases";
+        String longMovieTitle = "This Is An Extremely Long Movie Title That Contains Many Words And Should Still Work Correctly In The Statement";
+        
+        Customer customer = new Customer(longName);
+        customer.addRental(new Rental(new RegularMovie(longMovieTitle), 1));
+        
+        String statement = customer.generateStatement(formatter);
+        
+        assertTrue(statement.contains(longName));
+        assertTrue(statement.contains(longMovieTitle));
+    }
+    
+    @Test
+    @DisplayName("CHARACTERIZATION: Movie titles with tabs and newlines should be preserved")
+    public void characterizeMovieTitlesWithWhitespace() {
+        Customer customer = new Customer("Test");
+        customer.addRental(new Rental(new RegularMovie("Movie\tWith\tTabs"), 1));
+        
+        String statement = customer.generateStatement(formatter);
+        
+        assertTrue(statement.contains("Movie\tWith\tTabs"));
+    }
+    
+    @Test
+    @DisplayName("CHARACTERIZATION: Rentals maintain consistent calculation across formatters")
+    public void characterizeConsistentCalculationAcrossFormatters() {
+        Customer customer = new Customer("Test");
+        customer.addRental(new Rental(new RegularMovie("Movie A"), 3));
+        customer.addRental(new Rental(new NewReleaseMovie("Movie B"), 2));
+        
+        String textStatement = customer.generateStatement(new TextStatementFormatter());
+        String htmlStatement = customer.generateStatement(new movierental.formatters.HtmlStatementFormatter());
+        
+        // Both should calculate same totals
+        assertTrue(textStatement.contains("Amount owed is 9.5"));
+        assertTrue(htmlStatement.contains("<em>9.5</em>"));
+        
+        assertTrue(textStatement.contains("You earned 3 frequent renter points"));
+        assertTrue(htmlStatement.contains("<em>3</em> frequent renter points"));
+    }
+    
+    @Test
+    @DisplayName("CHARACTERIZATION: Single rental with maximum points bonus")
+    public void characterizeSingleRentalMaxPoints() {
+        Customer customer = new Customer("Test");
+        customer.addRental(new Rental(new NewReleaseMovie("Blockbuster"), 10));
+        
+        String statement = customer.generateStatement(formatter);
+        
+        // New release for 10 days: 10 * 3.0 = 30.0
+        assertTrue(statement.contains("Amount owed is 30.0"));
+        
+        // Should earn 2 points (bonus for > 1 day)
+        assertTrue(statement.contains("You earned 2 frequent renter points"));
+    }
+    
+    @Test
+    @DisplayName("CHARACTERIZATION: Mix of boundary and non-boundary rentals")
+    public void characterizeMixOfBoundaryRentals() {
+        Customer customer = new Customer("Test");
+        // Regular at boundary (2 days)
+        customer.addRental(new Rental(new RegularMovie("R Boundary"), 2));
+        // Regular over boundary (3 days)
+        customer.addRental(new Rental(new RegularMovie("R Over"), 3));
+        // Children at boundary (3 days)
+        customer.addRental(new Rental(new ChildrensMovie("C Boundary"), 3));
+        // Children over boundary (4 days)
+        customer.addRental(new Rental(new ChildrensMovie("C Over"), 4));
+        // New Release at bonus boundary (1 day - no bonus)
+        customer.addRental(new Rental(new NewReleaseMovie("N No Bonus"), 1));
+        // New Release over bonus boundary (2 days - bonus)
+        customer.addRental(new Rental(new NewReleaseMovie("N Bonus"), 2));
+        
+        String statement = customer.generateStatement(formatter);
+        
+        // Regular: 2.0 + 3.5 = 5.5
+        // Children: 1.5 + 3.0 = 4.5
+        // New Release: 3.0 + 6.0 = 9.0
+        // Total: 19.0
+        assertTrue(statement.contains("Amount owed is 19.0"));
+        
+        // Points: 1 + 1 + 1 + 1 + 1 + 2 = 7
+        assertTrue(statement.contains("You earned 7 frequent renter points"));
+    }
+    
+    @Test
+    @DisplayName("CHARACTERIZATION: Numeric customer name should work")
+    public void characterizeNumericCustomerName() {
+        Customer customer = new Customer("12345");
+        customer.addRental(new Rental(new RegularMovie("Movie"), 1));
+        
+        String statement = customer.generateStatement(formatter);
+        
+        assertTrue(statement.contains("Rental Record for 12345"));
+    }
 }
