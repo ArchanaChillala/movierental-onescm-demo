@@ -1,5 +1,7 @@
 package movierental;
 
+import movierental.formatters.TextStatementFormatter;
+import movierental.movietypes.*;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.Assert.*;

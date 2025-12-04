@@ -1,5 +1,7 @@
 package movierental;
 
+import movierental.movietypes.NewReleaseMovie;
+
 public class Rental {
 
     private static final int BASE_THRESHOLD_DAYS = 1;

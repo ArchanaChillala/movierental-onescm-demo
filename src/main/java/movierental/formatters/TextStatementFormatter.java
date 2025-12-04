@@ -1,4 +1,7 @@
-package movierental;
+package movierental.formatters;
+
+import movierental.Rental;
+import movierental.RentalStatementFormatter;
 
 import java.util.List;
 import java.util.stream.Collectors;

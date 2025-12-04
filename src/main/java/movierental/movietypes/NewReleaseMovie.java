@@ -1,4 +1,6 @@
-package movierental;
+package movierental.movietypes;
+
+import movierental.Movie;
 
 public class NewReleaseMovie extends Movie {
     

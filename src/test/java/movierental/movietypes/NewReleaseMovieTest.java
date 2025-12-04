@@ -1,5 +1,6 @@
-package movierental;
+package movierental.movietypes;
 
+import movierental.Movie;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.Assert.*;

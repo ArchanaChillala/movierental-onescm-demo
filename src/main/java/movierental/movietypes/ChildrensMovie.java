@@ -1,12 +1,14 @@
-package movierental;
+package movierental.movietypes;
 
-public class RegularMovie extends Movie {
+import movierental.Movie;
+
+public class ChildrensMovie extends Movie {
     
-    private static final double BASE_CHARGE = 2.0;
+    private static final double BASE_CHARGE = 1.5;
     private static final double EXTRA_CHARGE_PER_DAY = 1.5;
-    private static final int BASE_PERIOD = 2;
+    private static final int BASE_PERIOD = 3;
 
-    public RegularMovie(String title) {
+    public ChildrensMovie(String title) {
         super(title);
     }
     

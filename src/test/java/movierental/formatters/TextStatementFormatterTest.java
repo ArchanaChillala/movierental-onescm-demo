@@ -1,5 +1,7 @@
-package movierental;
+package movierental.formatters;
 
+import movierental.Rental;
+import movierental.movietypes.*;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 

@@ -1,6 +1,8 @@
 package movierental;
 import static junit.framework.Assert.assertEquals;
 
+import movierental.formatters.*;
+import movierental.movietypes.*;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
