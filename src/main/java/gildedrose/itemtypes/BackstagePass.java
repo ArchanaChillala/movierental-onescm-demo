@@ -1,4 +1,6 @@
-package gildedrose;
+package gildedrose.itemtypes;
+
+import gildedrose.Item;
 
 public class BackstagePass extends Item {
 

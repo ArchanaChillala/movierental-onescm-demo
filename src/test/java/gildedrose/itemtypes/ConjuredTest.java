@@ -1,10 +1,12 @@
-package gildedrose;
+package gildedrose.itemtypes;
 
+import gildedrose.GildedRose;
+import gildedrose.Item;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
 
-class ConjuredItemTest {
+class ConjuredTest {
 
     @Test
     @DisplayName("Conjured item quality degrades by 2 before sell date")

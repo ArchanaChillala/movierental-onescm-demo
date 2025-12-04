@@ -1,5 +1,7 @@
 package gildedrose;
 
+import gildedrose.itemtypes.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;

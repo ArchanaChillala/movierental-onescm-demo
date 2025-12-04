@@ -1,4 +1,4 @@
-package gildedrose;
+package gildedrose.itemtypes;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
